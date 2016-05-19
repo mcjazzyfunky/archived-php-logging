@@ -1,0 +1,83 @@
+<?php
+
+namespace logging\adapters\internal;
+
+use InvalidArgumentException;
+use Throwable;
+use logging\AbstractLog;
+use logging\Log;
+use logging\Logger;
+use logging\LogUtils;
+
+class StreamLog extends AbstractLog {
+    private $stream;
+
+    function __construct($domain, $stream, callable $logMessageFormatter = null) {
+        $this->domain = $domain;
+        $this->stream = $stream;
+        $this->logMessageFormatter = $logMessageFormatter;
+    }
+    
+    function log($level, $message, $context = null, $cause = null, $extra = null) {
+        if ($level !== LOG::NONE) {
+            if (!LogUtils::isValidLogLevel($level, true)) {
+                throw new InvalidArgumentException(
+                    '[StreamLog::log] First argument $level must be a '
+                    . 'valid log level');
+            }
+            
+            if ($this->isEnabled($level)) {
+                $output = null;
+                $date = date ('Y-m-d H:i:s');
+                $levelName = LogUtils::getLogLevelName($level);
+                $text = LogUtils::formatLogMessage($message, $context); 
+                $domain = $this->domain;
+                
+                if ($this->logMessageFormatter !== null) {
+                    $formatter = $this->logMessageFormatter;
+                    
+                    $output = $formatter([
+                        'date' => $date,
+                        'level' => $level,
+                        'message' => $text,
+                        'context' => $context,
+                        'cause' => $cause,
+                        'extra' => $extra,
+                        'domain' => $domain
+                    ]);
+                } else {
+                    $output = "[$date] [$levelName] [$domain] $text\n";
+                    
+                    if ($extra !== null) {
+                        $output .= "---- Extra ----\n";
+                        $output .= trim(print_r($extra, true));
+                    }
+                    
+                    if ($cause !== null) {
+                        $output .= "\n---- Cause ----";
+                        $output .= "\nClass: ";
+                        $output .= get_class($cause);
+                        $output .= "\nMessage: ";
+                        $output .= $cause->getMessage();
+                        $output .= "\nCode: ";
+                        $output .= $cause->getCode();
+                        $output .= "\nFile: ";
+                        $output .= $cause->getFile();
+                        $output .= "\nLine: ";
+                        $output .= $cause->getLine();
+                        $output .= "\nStack trace:\n";
+                        $output .= $cause->getTraceAsString();
+                        $output .= "\n";
+                    }
+                }
+                
+                fputs($this->stream, $output);
+                fflush($this->stream);
+            }
+        }
+    }
+    
+    function isEnabled($level) {
+        return $level >= Logger::getDefaultLogThreshold();
+    }
+}
