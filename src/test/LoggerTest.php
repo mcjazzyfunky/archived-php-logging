@@ -8,24 +8,34 @@ use Exception;
 use PHPUnit_Framework_TestCase;
 use logging\Logger;
 use logging\Log;
-use logging\adapters\StreamLoggerAdapter;
-use logging\adapters\FileLoggerAdapter;
+use logging\adapters\StreamLogAdapter;
+use logging\adapters\FileLogAdapter;
+use logging\adapters\CustomLogAdapter;
 
 class LoggerTest extends PHPUnit_Framework_TestCase {
     function testRun() {
         // Initialize a file logger:
         // $logFile = __DIR__ . '/test-{date}.log';
-        // Logger::setAdapter(new FileLoggerAdapter($logFile));
+        // Logger::setAdapter(new FileLogAdapter($logFile));
         
         // Customize output format, if you like:
         // Logger::setAdapter(
-        //     new FileLoggerAdapter($logFile, function ($logParams)  {
+        //     new FileLogAdapter($logFile, function ($logParams)  {
         //        ...
         //     }));
         
         // Initialize a logger to log out to STDOUT:
-        //Logger::setAdapter(new FileLoggerAdapter('php://stdout'));
-        Logger::setAdapter(new StreamLoggerAdapter(STDOUT));
+        //Logger::setAdapter(new FileLogAdapter('php://stdout'));
+        //Logger::setAdapter(new StreamLogAdapter(STDOUT));
+        
+        // Customize logging completely
+        Logger::setAdapter(new CustomLogAdapter(function ($logParams) {
+            if ($logParams['cause'] !== null) {
+                $logParams['cause'] = $logParams['cause']->getMessage();
+            }
+            
+            print_r($logParams);  
+        }));
     
         Logger::setDefaultThreshold(Log::DEBUG);
         

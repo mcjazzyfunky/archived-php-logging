@@ -7,11 +7,11 @@ use InvalidArgumentException;
 use Throwable;
 
 abstract class AbstractLog implements Log {
-    abstract function log($level, $message, $context = null, $cause = null, $extra = null);
+    abstract function log($level, $message, $args = null, $cause = null, $extra = null);
     
     abstract function isEnabled($level);
     
-    function trace($message, $context = null, $cause = null, $extra = null) {
+    function trace($message, $args = null, $cause = null, $extra = null) {
         if ($cause !== null
             && !($cause instanceof Exception) 
             && !($cause instanceof Throwable)) {
@@ -21,10 +21,10 @@ abstract class AbstractLog implements Log {
                 . 'Throwable/Exception or null');
         }
         
-        $this->log(Log::TRACE, $message, $context, $extra);   
+        $this->log(Log::TRACE, $message, $args, $extra);   
     }
     
-    function debug($message, $context = null, $cause = null, $extra = null) {
+    function debug($message, $args = null, $cause = null, $extra = null) {
         if ($cause !== null
             && !($cause instanceof Exception) 
             && !($cause instanceof Throwable)) {
@@ -34,10 +34,10 @@ abstract class AbstractLog implements Log {
                 . 'Throwable/Exception or null');
         }
 
-        $this->log(Log::DEBUG, $message, $context, $cause, $extra);   
+        $this->log(Log::DEBUG, $message, $args, $cause, $extra);   
     }
     
-    function info($message, $context = null, $cause = null, $extra = null) {
+    function info($message, $args = null, $cause = null, $extra = null) {
         if ($cause !== null
             && !($cause instanceof Exception) 
             && !($cause instanceof Throwable)) {
@@ -47,10 +47,10 @@ abstract class AbstractLog implements Log {
                 . 'Throwable/Exception or null');
         }
         
-        $this->log(Log::INFO, $message, $context, $cause, $extra);   
+        $this->log(Log::INFO, $message, $args, $cause, $extra);   
     }
     
-    function notice($message, $context = null, $cause = null, $extra = null) {
+    function notice($message, $args = null, $cause = null, $extra = null) {
         if ($cause !== null
             && !($cause instanceof Exception) 
             && !($cause instanceof Throwable)) {
@@ -60,10 +60,10 @@ abstract class AbstractLog implements Log {
                 . 'Throwable/Exception or null');
         }
 
-        $this->log(Log::TRACE, $message, $context, $cause, $extra);   
+        $this->log(Log::TRACE, $message, $args, $cause, $extra);   
     }
     
-    function warn($message, $context = null, $cause = null, $extra = null) {
+    function warn($message, $args = null, $cause = null, $extra = null) {
         if ($cause !== null
             && !($cause instanceof Exception) 
             && !($cause instanceof Throwable)) {
@@ -73,10 +73,10 @@ abstract class AbstractLog implements Log {
                 . 'Throwable/Exception or null');
         }
 
-        $this->log(Log::WARN, $message, $context, $cause, $extra);
+        $this->log(Log::WARN, $message, $args, $cause, $extra);
     }
     
-    function error($message, $context = null, $cause = null, $extra = null) {
+    function error($message, $args = null, $cause = null, $extra = null) {
         if ($cause !== null
             && !($cause instanceof Exception) 
             && !($cause instanceof Throwable)) {
@@ -86,10 +86,10 @@ abstract class AbstractLog implements Log {
                 . 'Throwable/Exception or null');
         }
 
-        $this->log(Log::ERROR, $message, $context, $cause, $extra);
+        $this->log(Log::ERROR, $message, $args, $cause, $extra);
     }
     
-    function critical($message, $context = null, $cause = null, $extra = null) {
+    function critical($message, $args = null, $cause = null, $extra = null) {
         if ($cause !== null
             && !($cause instanceof Exception) 
             && !($cause instanceof Throwable)) {
@@ -99,10 +99,10 @@ abstract class AbstractLog implements Log {
                 . 'Throwable/Exception or null');
         }
 
-        $this->log(Log::CRITICAL, $message, $context, $cause, $extra);
+        $this->log(Log::CRITICAL, $message, $args, $cause, $extra);
     }
     
-    function alert($message, $context = null, $cause = null, $extra = null) {
+    function alert($message, $args = null, $cause = null, $extra = null) {
         if ($cause !== null
             && !($cause instanceof Exception) 
             && !($cause instanceof Throwable)) {
@@ -112,10 +112,10 @@ abstract class AbstractLog implements Log {
                 . 'Throwable/Exception or null');
         }
 
-        $this->log(Log::ALERT, $message, $context, $extra);
+        $this->log(Log::ALERT, $message, $args, $extra);
     }
     
-    function emergency($message = null, $context = null, $cause = null, $extra = null) {
+    function emergency($message = null, $args = null, $cause = null, $extra = null) {
         if ($cause !== null
             && !($cause instanceof Exception) 
             && !($cause instanceof Throwable)) {
@@ -125,7 +125,7 @@ abstract class AbstractLog implements Log {
                 . 'Throwable/Exception or null');
         }
 
-        $this->log(Log::EMERGENCY, $message, $context, $cause, $extra);
+        $this->log(Log::EMERGENCY, $message, $args, $cause, $extra);
     }
 
     function isTraceEnabled() {

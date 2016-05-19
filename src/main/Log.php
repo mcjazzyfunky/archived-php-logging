@@ -16,27 +16,27 @@ interface Log {
     const EMERGENCY = 9;
     const NONE = 10;
     
-    function log($level, $message, $context = null, $cause, $extra = null);
+    function log($level, $message, $args = null, $cause, $extra = null);
     
     function isEnabled($level);
     
-    function trace($message, $context = null, $cause = null, $extra = null);
+    function trace($message, $args = null, $cause = null, $extra = null);
     
-    function debug($message, $context = null, $cause = null, $extra = null);
+    function debug($message, $args = null, $cause = null, $extra = null);
     
-    function info($message, $context = null, $cause = null, $extra = null);
+    function info($message, $args = null, $cause = null, $extra = null);
     
-    function notice($message, $context = null, $cause = null, $extra = null);  
+    function notice($message, $args = null, $cause = null, $extra = null);  
     
-    function warn($message, $context = null, $cause = null, $extra = null);
+    function warn($message, $args = null, $cause = null, $extra = null);
     
-    function error($mssage, $context = null, $cause = null, $extra = null);
+    function error($mssage, $args = null, $cause = null, $extra = null);
     
-    function critical($message, $context = null, $cause = null, $extra = null);
+    function critical($message, $args = null, $cause = null, $extra = null);
     
-    function alert($message, $context = null, $cause = null, $extra = null);
+    function alert($message, $args = null, $cause = null, $extra = null);
     
-    function emergency($message = null, $context = null, $cause = null, $extra = null);
+    function emergency($message = null, $args = null, $cause = null, $extra = null);
 
     function isTraceEnabled();
 

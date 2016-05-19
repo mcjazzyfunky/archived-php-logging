@@ -2,10 +2,10 @@
 
 namespace logging\adapters;
 
-use logging\LoggerAdapter;
+use logging\LogAdapter;
 use logging\adapters\internal\StreamLog;
 
-class StreamLoggerAdapter implements LoggerAdapter {
+class StreamLogAdapter implements LogAdapter {
     private $stream;
     private $logMessageFormatter;
     private $logs;

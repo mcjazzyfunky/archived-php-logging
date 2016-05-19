@@ -2,10 +2,10 @@
 
 namespace logging\adapters;
 
-use logging\LoggerAdapter;
+use logging\LogAdapter;
 use logging\adapters\internal\NullLog;
 
-class NullLoggerAdapter implements LoggerAdapter {
+class NullLogAdapter implements LogAdapter {
     private $log;
 
     function __construct() {

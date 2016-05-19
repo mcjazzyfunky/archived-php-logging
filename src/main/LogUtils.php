@@ -30,28 +30,28 @@ final class LogUtils {
         return self::$logLevelNames[$level];
     }
     
-    static function formatLogMessage($message, $context = null) {
+    static function formatLogMessage($message, $args = null) {
         if (!is_string($message)) {
             throw new InvalidArgumentException(
                 '[LogUtils::formatLogMessage] First argument $message must be '
                 . 'a string');
-        } else if ($context !== null && !is_scalar($context) && !is_array($context)) {
+        } else if ($args !== null && !is_scalar($args) && !is_array($args)) {
             throw new InvalidArgumentException(
-                '[LogUtils::formatLogMessage] Second argument $context must either '
+                '[LogUtils::formatLogMessage] Second argument $args must either '
                 . 'be a scalar or an array or null');
         }
         
         $ret = null;
         
-        if ($context === null) {
+        if ($args === null) {
             $ret = $message;    
         } else {
-            if (is_scalar($context)) {
-                $ret = str_replace('{0}', $context, $message);
-            } else if (is_array($context)) {
+            if (is_scalar($args)) {
+                $ret = str_replace('{0}', $args, $message);
+            } else if (is_array($args)) {
                 $replacements = [];
                 
-                foreach ($context as $key => $value) {
+                foreach ($args as $key => $value) {
                     $replacements['{' . $key . '}'] = $value;
                 }
                 

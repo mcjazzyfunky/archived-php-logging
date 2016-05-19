@@ -4,7 +4,7 @@ namespace logging;
 
 use InvalidArgumentException;
 use logging\Log;
-use logging\adapters\NullLoggerAdapter;
+use logging\adapters\NullLogAdapter;
 
 final class Logger {
     private static $adapter = null;
@@ -36,7 +36,7 @@ final class Logger {
             : $name;
         
         if (self::$adapter === null) {
-            self::$adapter = new NullLoggerAdapter();
+            self::$adapter = new NullLogAdapter();
         }
         
         return self::$adapter->getLog($logName);
@@ -65,7 +65,7 @@ final class Logger {
             : self::$adapter->getThresholdByLogName($name);
     }
     
-    static function setAdapter(LoggerAdapter $adapter) {
+    static function setAdapter(LogAdapter $adapter) {
         self::$adapter = $adapter;
     }
     

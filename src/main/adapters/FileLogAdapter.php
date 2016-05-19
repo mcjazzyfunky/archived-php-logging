@@ -3,9 +3,9 @@
 namespace logging\adapters;
 
 use Exception;
-use logging\adapters\StreamLoggerAdapter;
+use logging\adapters\StreamLogAdapter;
 
-class FileLoggerAdapter extends StreamLoggerAdapter {
+class FileLogAdapter extends StreamLogAdapter {
     function __construct($path, callable $logMessageFormatter = null) {
         $logFilePath = str_replace('{date}', date('Y-m-d'), $path);
         $stream = @fopen($logFilePath, 'a') ?: null;

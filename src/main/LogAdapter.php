@@ -2,7 +2,7 @@
 
 namespace logging;
 
-Interface LoggerAdapter {
+Interface LogAdapter {
     function getLog($name);
     
     function getThresholdByLogName($name);

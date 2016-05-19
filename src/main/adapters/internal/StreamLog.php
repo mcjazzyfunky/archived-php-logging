@@ -18,7 +18,7 @@ class StreamLog extends AbstractLog {
         $this->logMessageFormatter = $logMessageFormatter;
     }
     
-    function log($level, $message, $context = null, $cause = null, $extra = null) {
+    function log($level, $message, $args = null, $cause = null, $extra = null) {
         if ($level !== LOG::NONE) {
             if (!LogUtils::isValidLogLevel($level, true)) {
                 throw new InvalidArgumentException(
@@ -30,7 +30,7 @@ class StreamLog extends AbstractLog {
                 $output = null;
                 $date = date ('Y-m-d H:i:s');
                 $levelName = LogUtils::getLogLevelName($level);
-                $text = LogUtils::formatLogMessage($message, $context); 
+                $text = LogUtils::formatLogMessage($message, $args); 
                 $name = $this->name;
                 
                 if ($this->logMessageFormatter !== null) {
@@ -38,12 +38,12 @@ class StreamLog extends AbstractLog {
                     
                     $output = $formatter([
                         'date' => $date,
-                        'level' => $level,
+                        'level' => $levelName,
+                        'levelNo' => $level,
                         'message' => $text,
-                        'context' => $context,
                         'cause' => $cause,
                         'extra' => $extra,
-                        'name' => $name
+                        'logName' => $name
                     ]);
                 } else {
                     $output = "[$date] [$levelName] [$name] $text\n";
@@ -51,6 +51,7 @@ class StreamLog extends AbstractLog {
                     if ($extra !== null) {
                         $output .= "---- Extra ----\n";
                         $output .= trim(print_r($extra, true));
+                        $output .= "\n";
                     }
                     
                     if ($cause !== null) {
