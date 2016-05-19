@@ -3,7 +3,7 @@
 namespace logging;
 
 Interface LoggerAdapter {
-    function getLog($domain);
+    function getLog($name);
     
-    function getLogThresholdByDomain($domain);
+    function getThresholdByLogName($name);
 }

@@ -47,7 +47,7 @@ final class LogUtils {
             $ret = $message;    
         } else {
             if (is_scalar($context)) {
-                $ret = str_replace('{0}', $context, $ret);
+                $ret = str_replace('{0}', $context, $message);
             } else if (is_array($context)) {
                 $replacements = [];
                 

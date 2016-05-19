@@ -20,20 +20,20 @@ class StreamLoggerAdapter implements LoggerAdapter {
         return $this->stream;
     }
     
-    function getLog($domain) {
-        $ret = @$this->logs[$domain];
+    function getLog($name) {
+        $ret = @$this->logs[$name];
         
         if ($ret === null) {
             $ret = new StreamLog(
-                $domain, $this->stream, $this->logMessageFormatter);
+                $name, $this->stream, $this->logMessageFormatter);
             
-            $this->logs[$domain] = $ret;
+            $this->logs[$name] = $ret;
         }
         
         return $ret;
     }
     
-    function getLogThresholdByDomain($domain) {
-        return Logger::getDefaultLogThreshold();
+    function getThresholdByLogName($name) {
+        return Logger::getDefaultThreshold();
     }
 }

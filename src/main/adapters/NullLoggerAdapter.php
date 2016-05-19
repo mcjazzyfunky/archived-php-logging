@@ -12,11 +12,11 @@ class NullLoggerAdapter implements LoggerAdapter {
         $this->log = new NullLog();
     }
     
-    function getLog($domain) {
+    function getLog($name) {
         return $this->log;
     }
 
-    function getLogThresholdByDomain($domain) {
+    function getThresholdByLogName($name) {
         return LOG::NONE;
     }
 }

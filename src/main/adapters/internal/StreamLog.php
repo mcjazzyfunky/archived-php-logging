@@ -12,8 +12,8 @@ use logging\LogUtils;
 class StreamLog extends AbstractLog {
     private $stream;
 
-    function __construct($domain, $stream, callable $logMessageFormatter = null) {
-        $this->domain = $domain;
+    function __construct($name, $stream, callable $logMessageFormatter = null) {
+        $this->name = $name;
         $this->stream = $stream;
         $this->logMessageFormatter = $logMessageFormatter;
     }
@@ -31,7 +31,7 @@ class StreamLog extends AbstractLog {
                 $date = date ('Y-m-d H:i:s');
                 $levelName = LogUtils::getLogLevelName($level);
                 $text = LogUtils::formatLogMessage($message, $context); 
-                $domain = $this->domain;
+                $name = $this->name;
                 
                 if ($this->logMessageFormatter !== null) {
                     $formatter = $this->logMessageFormatter;
@@ -43,10 +43,10 @@ class StreamLog extends AbstractLog {
                         'context' => $context,
                         'cause' => $cause,
                         'extra' => $extra,
-                        'domain' => $domain
+                        'name' => $name
                     ]);
                 } else {
-                    $output = "[$date] [$levelName] [$domain] $text\n";
+                    $output = "[$date] [$levelName] [$name] $text\n";
                     
                     if ($extra !== null) {
                         $output .= "---- Extra ----\n";
@@ -54,7 +54,7 @@ class StreamLog extends AbstractLog {
                     }
                     
                     if ($cause !== null) {
-                        $output .= "\n---- Cause ----";
+                        $output .= "---- Cause ----";
                         $output .= "\nClass: ";
                         $output .= get_class($cause);
                         $output .= "\nMessage: ";
@@ -78,6 +78,6 @@ class StreamLog extends AbstractLog {
     }
     
     function isEnabled($level) {
-        return $level >= Logger::getDefaultLogThreshold();
+        return $level >= Logger::getDefaultThreshold();
     }
 }
