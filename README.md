@@ -99,7 +99,7 @@ Then include the PHP file "include.php" which is to be found in the root
 folder of  "php-logging" (all class and interface files will be included
 automatically as "php-logging" uses PHP's autoload functionality).
 
-# Initialization of "php-logging"
+# Usage of "php-logging"
 
 "php-logging" is actually completely working just by including the above
 mentioned "incude.php" file.<br>
