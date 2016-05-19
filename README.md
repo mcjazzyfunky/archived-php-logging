@@ -178,7 +178,7 @@ Placeholders for log messages:
 ```php
 $this->log->error('DB error: {0}', $exception->getMessage());
 
-$this->log->error('DB error ({code}): {errMsg}, [
+$this->log->error('DB error ({code}): {errMsg}', [
     'code' => $exception->getCode()
     'errMsg' => $exception->getMessage()
 ]);
@@ -220,7 +220,7 @@ That's it ... have fun ... ;-)
 
 # Project status
 
-"php logger" is a very new project and still alpha.<br/>
+"php-logging" is a very new project and still alpha.<br/>
 While the API is almost final and the implementation is already working, there's
 still a lot to do regarding unit testing and inline documentation.
 
