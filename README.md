@@ -45,7 +45,7 @@ A PHP de facto standard logger interface is the
 [PSR-3 Logger Interface](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md)
 approved by the [PHP Framework Interop Group](https://en.wikipedia.org/wiki/PHP_Standard_Recommendation).<br>
 Maybe using this quasi standard should be your first choice!<br>
-Nevertheless the author for "php-logging" is of the opinion, that the API of
+Nevertheless the author of "php-logging" is of the opinion, that the API of
 PSR-3 is a bit suboptimal (for example the PSR-3 logger interface does not
 provide methods to find out whether logging is activated for a certain domain,
 also you cannot pass the throwables/exceptions which are the cause of the log
@@ -71,7 +71,7 @@ by PHP code.<br>
 In the best case (maybe for 75% of all applications) you just have to write
 four lines of PHP code to make "php-logging" run propertly in your
 application.<br>
-If having only one log file is fine for you but you would like a different
+If 'having only one log file' is fine for you but you would like a different
 text output format for the log entries or just pass the log parameters directly
 to the underlying logging system (maybe 15% of all cases) you have to write
 those four lines plus one closure.<br>
@@ -119,8 +119,8 @@ You mainly have to deal with to classes/intefaces:
   and providing instances of interface
   *Log*.
 
-Remark: A class "MDA" will follow later versions of "php-logging" to handle
-"mapped diagnostic context" to provide a possibility to more ore less
+Remark: A class "MDA" will follow in a later version of "php-logging" to handle
+"mapped diagnostic context" to provide a possibility to more or less
 implicitly add additional information to the log entries (for example session
 IDs and user login names etc).
 
@@ -144,6 +144,7 @@ Logger::setDefaultThreshold(Log::Info);
 Instantiate/get a log by a certain name (normally by class name):
 
 ```php
+// Normally it would be better to pass/inject the log instance by constructor
 $this->log = Logger::getLog($this);
 // short form for Logger::getLog(get_class($this));
 ```
@@ -208,7 +209,7 @@ For a more sophisticated log customization:
 
 ```php
 Logger::setLogAdapter(new CustomLogAdapter(function ($logParams) {
-    // do whatever you thing is necessary to perform the logging properly
+    // do whatever you think is necessary to perform the logging properly
 });
 ```
 
