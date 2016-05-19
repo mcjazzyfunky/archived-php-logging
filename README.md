@@ -30,8 +30,8 @@ Some great PHP logging frameworks are for example:
 * etc.
 
 Now as you have decided to use an existing logging framework, which one shall
-you use?<br>
-As often the answer is: *It depends.*<br>
+be used?<br>
+As often, the answer is: *It depends.*<br>
 In case that you will write a whole application it may be possible to depend
 on one special logging framework.<br>
 But in case that you write a library that will not be possible, because you
@@ -57,14 +57,13 @@ That's why the "php-logging" project has been started.
 
 The purpose of "php-logging" is to provide an as simple as possible logging
 facade that is completely independent of the actually used logging framework
-and also completely independent of the underlying logging logic of the
-application.<br>
+and also completely independent of any application specific logging logic.<br>
 The key feature is to provide a simple API for the logging itself plus the
 possibility to adapt the logging facade easily to the underlying logging
 system or logic.<br>
 Unlinke other logging facade libraries, "php-logging" does not
-(and never will) provide any adapters to well-known logging frameworks, it just
-provides some most simple preexisting adapter to write log entries to one single
+(and never will!) provide any adapters to well-known logging frameworks, it just
+provides some most simple preexisting adapters to write log entries to one single
 log file/stream or to simplify customization.<br>
 There are no configuration files. The idea behind this is that it is often far
 easier to do the initialization and adaption of the logging facade directly
@@ -73,8 +72,8 @@ In the best case (maybe for 75% of all applications) you just have to write
 four lines of PHP code to make "php-logging" run propertly in your
 application.<br>
 If having only one log file is fine for you but you would like a different
-text format for the log entries or just pass the log parameters directly to
-the logging system (maybe 15% of all cases) you have to write
+text output format for the log entries or just pass the log parameters directly
+to the underlying logging system (maybe 15% of all cases) you have to write
 those four lines plus one closure.<br>
 For all other (maybe 5%) cases you have to implement two interfaces to
 make the log entries be processed the way you like.
@@ -97,21 +96,22 @@ Supported log levels:
 Just add the "php-logging" folder somewhere to your project
 ("composer" support is currently not available).<br>
 Then include the PHP file "include.php" which is to be found in the root
-folder of  "php-logging" (all classe and interface files will be included
+folder of  "php-logging" (all class and interface files will be included
 automatically as "php-logging" uses PHP's autoload functionality).
 
 # Initialization of "php-logging"
 
 "php-logging" is actually completely working just by including the above
 mentioned "incude.php" file.<br>
-But by default it uses the so-call NullLoggerAdapter which just consumes all
-log requests without really doing anything.
+But by default it uses the so-call NullLoggerAdapter which will just consume
+all log requests without really doing anything.
 
-You mainly have to deal with to classes or intefaces:
+You mainly have to deal with to classes/intefaces:
 
 *  interface *Log*:
 
-  Needed to send logging requests.
+  Needed to send the actual logging requests.
+  Also provides constants for the above mentioned log levels.
 
 * class *Logger*:
 
@@ -122,11 +122,11 @@ You mainly have to deal with to classes or intefaces:
 Remark: A class "MDA" will follow later versions of "php-logging" to handle
 "mapped diagnostic context" to provide a possibility to more ore less
 implicitly add additional information to the log entries (for example session
-ids and user login names etc).
+IDs and user login names etc).
 
 To activate a file logger you have to add the following lines (the placeholder
-{date} will be replaced automatically with the current date in ISO format
-- e.g. 2016-05):
+{date} will be replaced automatically with the current date in ISO format -
+e.g. 2016-05-18):
 
 ```php
 $logFile = __DIR__ . '/path/to/log/folder/app-{date}.log';
@@ -134,7 +134,8 @@ Logger::setAdapter(new FileLogAdapter($logFile));
 Logger::setDefaultThreshold(Log::INFO);
 ```
 
-If you like to log out to STDOUT (for example for test purpose) then you have to call:
+If you like to log out to STDOUT (for example for test purposes) then you
+have to call:
 
 ```php
 Logger::setLogAdapter(new StreamLogAdapter(STDOUT));
@@ -144,7 +145,7 @@ Instantiate/get a log by a certain name (normally by class name):
 
 ```php
 $this->log = Logger::getLog($this);
-Logger::getLog(get_class($this));
+// short form for Logger::getLog(get_class($this));
 ```
 Other options are for example:
 
@@ -203,7 +204,7 @@ Logger::setLogAdapter(new FileLogAdapter($logFile, function ($logParams) {
 });
 ```
 
-For a more sophisticated log customization, e.g.
+For a more sophisticated log customization:
 
 ```php
 Logger::setLogAdapter(new CustomLogAdapter(function ($logParams) {
@@ -212,6 +213,6 @@ Logger::setLogAdapter(new CustomLogAdapter(function ($logParams) {
 ```
 
 For the ultimate customization you may provide your own implementation of
-the interfaces *Log* and *LogAdapter* (see API documentation for detials).
+the interfaces *Log* and *LogAdapter* (see API documentation for details).
 
 That's it ... have fun ... ;-)
