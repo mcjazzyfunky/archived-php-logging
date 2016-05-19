@@ -217,3 +217,10 @@ For the ultimate customization you may provide your own implementation of
 the interfaces *Log* and *LogAdapter* (see API documentation for details).
 
 That's it ... have fun ... ;-)
+
+# Project status
+
+"php logger" is a very new project and still alpha.<br/>
+While the API is almost final and the implementation is already working, there's
+still a lot to do regarding unit testing and inline documentation.
+
