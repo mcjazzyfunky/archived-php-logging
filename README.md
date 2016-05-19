@@ -8,7 +8,7 @@ Logging is a cross-cutting concern that is heavily used in almost every
 serious application.<br>
 An important topic that has to be dealt with at the beginning of a new software
 project is the question which logging framework shall be applied.<br>
-You may think that in case that your initial requirements regarding logging
+You may think that in case your initial requirements regarding logging
 are not very demanding, you could write the logging functionality completely
 on your own.<br>
 But that would not be a good idea. Because there's a pretty good chance that in
@@ -17,8 +17,8 @@ there will eventually be the need to split up your former single log file into
 several different ones depending on different aspects of your application
 (for example per module).<br>
 Or maybe there will be a change request to send an emergency email on certain
-special log entries.<br>
-Of course you can implement all these changes on your own, but quite a lot of
+log entries.<br>
+Of course you can implement all these changes on your own, but luckily some
 very smart guys have already done this for you, so you should better prefer
 to use their libraries instead of writing everything from scratch.<br>
 
@@ -29,18 +29,18 @@ Some great PHP logging frameworks are for example:
 * [Zend\Log](http://framework.zend.com/manual/current/en/modules/zend.log.overview.html)
 * etc.
 
-Now as you have decided to use a existing logging framework, which one shall
+Now as you have decided to use an existing logging framework, which one shall
 you use?<br>
 As often the answer is: *It depends.*<br>
 In case that you will write a whole application it may be possible to depend
 on one special logging framework.<br>
-In case that you write a library it will not be possible, because you never know
-which logging framework is used in the applications that will use your
-library.<br>
+But in case that you write a library that will not be possible, because you
+never know which logging framework is used in the applications that will use
+your library.<br>
 A way out of the dilemma is not to use the logging framework directly but to use
-a simple facade to delegate the log request to a underlying and now exchangeable
+a simple facade to delegate the log request to an underlying and exchangeable
 logging framework (in the Java world a very commonly used logging facade is
-[slf4j](http://www.slf4j.org)).<br>
+["Simple logging facade for Java (slf4j)"](http://www.slf4j.org)).<br>
 A PHP de facto standard logger interface is the
 [PSR-3 Logger Interface](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md)
 approved by the [PHP Framework Interop Group](https://en.wikipedia.org/wiki/PHP_Standard_Recommendation).<br>
@@ -60,22 +60,22 @@ facade that is completely independent of the actually used logging framework
 and also completely independent of the underlying logging logic of the
 application.<br>
 The key feature is to provide a simple API for the logging itself plus the
-possibility adapt the logging facade easily to the underlying logging
-logic.<br>
-Despite of other logging facade libraries "php-logging" does not
+possibility to adapt the logging facade easily to the underlying logging
+system or logic.<br>
+Unlinke other logging facade libraries, "php-logging" does not
 (and never will) provide any adapters to well-known logging frameworks, it just
-provide a most simple preexisting adapter to write log entries to one single
-log file.<br>
+provides some most simple preexisting adapter to write log entries to one single
+log file/stream or to simplify customization.<br>
 There are no configuration files. The idea behind this is that it is often far
-more easy to do the initialization and adaption of the logging facade directly
+easier to do the initialization and adaption of the logging facade directly
 by PHP code.<br>
 In the best case (maybe for 75% of all applications) you just have to write
-four lines of PHP code to make "php-logging" run in your application
-properly.<br>
+four lines of PHP code to make "php-logging" run propertly in your
+application.<br>
 If having only one log file is fine for you but you would like a different
-format for the log entries then predefined in "php-logging"
-(maybe 15% of all cases) you have to write those four lines plus one
-closure.<br>
+text format for the log entries or just pass the log parameters directly to
+the logging system (maybe 15% of all cases) you have to write
+those four lines plus one closure.<br>
 For all other (maybe 5%) cases you have to implement two interfaces to
 make the log entries be processed the way you like.
 
