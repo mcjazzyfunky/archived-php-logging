@@ -219,6 +219,7 @@ That's it ... have fun ... ;-)
 
 # Project status
 
-"php-logging" is a very new project and still alpha.<br/>
-While the API is almost final and the implementation is already working, there's
-still a lot to do regarding finalizing code, unit testing and inline documentation.
+"php-logging" is a very new project and still in alpha state.<br/>
+While the API is almost final and the implementation is already working,
+there's still a lot to do regarding finalizing code, unit testing and inline
+documentation.
