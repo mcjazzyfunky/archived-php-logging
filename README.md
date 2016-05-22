@@ -7,14 +7,14 @@ A super simple yet powerful logging facade for PHP
 Logging is a cross-cutting concern that is heavily used in almost every
 serious application.<br>
 An important topic that has to be dealt with at the beginning of a new software
-project is the question which logging framework shall be applied.<br>
+project is the question, which logging framework shall be applied.<br>
 You may think that in case your initial requirements regarding logging
 are not very demanding, you could write the logging functionality completely
 on your own.<br>
 But that would not be a good idea. Because there's a pretty good chance that in
 in future, after your application  has been running successfully for a while,
-there will eventually be the need to split up your former single log file into
-several different ones depending on different aspects of your application
+there will eventually be the need of splitting up your former single log file into
+several different files depending on different aspects of your application
 (for example per module).<br>
 Or maybe there will be a change request to send an emergency email on certain
 log entries.<br>
@@ -78,7 +78,7 @@ those four lines plus one closure.<br>
 For all other (maybe 5%) cases you have to implement two interfaces to
 make the log entries be processed the way you like.
 
-Supported log levels:
+Supported log levels are:
 
 * TRACE
 * DEBUG
@@ -91,7 +91,7 @@ Supported log levels:
 * EMERGENCY
 
 
-# Deployment
+# Installation
 
 Just add the "php-logging" folder somewhere to your project
 ("composer" support is currently not available).<br>
@@ -116,8 +116,7 @@ You mainly have to deal with to classes/intefaces:
 * class *Logger*:
 
   Needed to configure the logging logic, setting the default log threshold
-  and providing instances of interface
-  *Log*.
+  and provider/factory for instances of interface *Log*.
 
 Remark: A class "MDA" will follow in a later version of "php-logging" to handle
 "mapped diagnostic context" to provide a possibility to more or less
@@ -222,5 +221,4 @@ That's it ... have fun ... ;-)
 
 "php-logging" is a very new project and still alpha.<br/>
 While the API is almost final and the implementation is already working, there's
-still a lot to do regarding unit testing and inline documentation.
-
+still a lot to do regarding finalizing code, unit testing and inline documentation.
