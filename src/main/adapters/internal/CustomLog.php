@@ -22,22 +22,20 @@ class CustomLog extends AbstractLog {
         $this->getThresholdByLogName = $getThresholdByLogName;
     }
     
-    function log($level, $message, $args = null, $cause = null, $extra = null) {
-        $date = date ('Y-m-d H:i:s');
+    function log($level, $message, $context = null) {
+        $date = date('Y-m-d H:i:s');
         $levelName = LogUtils::getLogLevelName($level);
-        $text = LogUtils::formatLogMessage($message, $args); 
+        $text = LogUtils::formatLogMessage($message, $context); 
         $name = $this->name;
         
         $performLogRequest = $this->performLogRequest;
         
         $performLogRequest([
             'date' => $date,
+            'name' => $name,
             'level' => $levelName,
-            'levelNo' => $level,
-            'message' => $text,
-            'cause' => $cause,
-            'extra' => $extra,
-            'logName' => $name
+            'code' => $level,
+            'message' => $text
         ]);
     }
     

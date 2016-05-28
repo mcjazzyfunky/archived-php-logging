@@ -16,27 +16,27 @@ interface Log {
     const EMERGENCY = 9;
     const NONE = 10;
     
-    function log($level, $message, $args = null, $cause, $extra = null);
+    function log($level, $message, $context = null);
     
     function isEnabled($level);
     
-    function trace($message, $args = null, $cause = null, $extra = null);
+    function trace($message, $context = null);
     
-    function debug($message, $args = null, $cause = null, $extra = null);
+    function debug($message, $context = null);
     
-    function info($message, $args = null, $cause = null, $extra = null);
+    function info($message, $context = null);
     
-    function notice($message, $args = null, $cause = null, $extra = null);  
+    function notice($message, $context = null);  
     
-    function warn($message, $args = null, $cause = null, $extra = null);
+    function warn($message, $context = null);
     
-    function error($mssage, $args = null, $cause = null, $extra = null);
+    function error($message, $context = null);
     
-    function critical($message, $args = null, $cause = null, $extra = null);
+    function critical($message, $context = null);
     
-    function alert($message, $args = null, $cause = null, $extra = null);
+    function alert($message, $context = null);
     
-    function emergency($message = null, $args = null, $cause = null, $extra = null);
+    function emergency($message, $context = null);
 
     function isTraceEnabled();
 

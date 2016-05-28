@@ -26,8 +26,9 @@ class LoggerTest extends PHPUnit_Framework_TestCase {
         
         // Initialize a logger to log out to STDOUT:
         //Logger::setAdapter(new FileLogAdapter('php://stdout'));
-        //Logger::setAdapter(new StreamLogAdapter(STDOUT));
-        
+        Logger::setAdapter(new StreamLogAdapter(STDOUT));
+       
+        /* 
         // Customize logging completely
         Logger::setAdapter(new CustomLogAdapter(function ($logParams) {
             if ($logParams['cause'] !== null) {
@@ -36,7 +37,8 @@ class LoggerTest extends PHPUnit_Framework_TestCase {
             
             print_r($logParams);  
         }));
-    
+        */
+        
         Logger::setDefaultThreshold(Log::DEBUG);
         
         // Get the log instance:
@@ -47,29 +49,24 @@ class LoggerTest extends PHPUnit_Framework_TestCase {
         $log = Logger::getLog($this);
         
         $log->debug('Just a debug message (with one placeholder)');
-        $log->info('Hey {0}, just wanna say hello', 'Marge');
+        $log->info(['Hey %s, just wanna say hello', 'Marge']);
         
         $error = new Exception('Evil error', 911);
 
         // Include error message:
         $log->error(
-            'Ooops, there was an error: {err}',
+            ['Ooops, there was an error: %s', 123],
             ['err' => $error->getMessage()]);
         
         // Include error message and stack trace:
         $log->critical(
-            'Help, there was a critical error: {err}',
-            ['err' => $error->getMessage()],
+            'Help, there was a critical error: {exception}',
+            ['exception' => $error],
             $error);
 
         // Include error message and stack trace and some extra log data
         $log->emergency(
-            'Run for your lives, there was a core melt accident: {err}',
-            ['err' => $error->getMessage()],
-            $error,
-            ['location' => 'Sector 7G']);
+            'Run for your lives, there was a core melt accident: {cause}',
+            ['cause' => $error, 'location' => 'Sector 7G']);
     }
 }
-
-
-

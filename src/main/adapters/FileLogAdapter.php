@@ -8,7 +8,7 @@ use logging\adapters\StreamLogAdapter;
 class FileLogAdapter extends StreamLogAdapter {
     function __construct($path, callable $logMessageFormatter = null) {
         $logFilePath = str_replace('{date}', date('Y-m-d'), $path);
-        $stream = @fopen($logFilePath, 'a') ?: null;
+        $stream = @fopen($logFilePath, 'ab') ?: null;
         
         if ($stream === null) {
             $error = error_get_last()['message'];

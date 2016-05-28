@@ -2,7 +2,9 @@
 
 namespace logging;
 
+use Exception;
 use InvalidArgumentException;
+use Throwable;
 
 final class LogUtils {
     private function __construct() {
@@ -30,35 +32,74 @@ final class LogUtils {
         return self::$logLevelNames[$level];
     }
     
-    static function formatLogMessage($message, $args = null) {
-        if (!is_string($message)) {
-            throw new InvalidArgumentException(
-                '[LogUtils::formatLogMessage] First argument $message must be '
-                . 'a string');
-        } else if ($args !== null && !is_scalar($args) && !is_array($args)) {
-            throw new InvalidArgumentException(
-                '[LogUtils::formatLogMessage] Second argument $args must either '
-                . 'be a scalar or an array or null');
-        }
-        
+    static function formatLogMessage($message, $context = null) {
+        $messageIsArray = is_array($message);
         $ret = null;
         
-        if ($args === null) {
-            $ret = $message;    
-        } else {
-            if (is_scalar($args)) {
-                $ret = str_replace('{0}', $args, $message);
-            } else if (is_array($args)) {
-                $replacements = [];
+        if (!is_string($message) && !$messageIsArray) {
+            throw new InvalidArgumentException(
+                '[LogUtils::formatLogMessage] First argument $message must '
+                . 'either be a string or an array');
+        } else if ($messageIsArray && !is_string(@$message[0])) {
+            throw new InvalidArgumentException(
+                '[LogUtils::formatLogMessage] First array element of first '
+                . 'argument $message must be a string');
+        } else if ($context !== null
+            && !is_array($context)
+            && !($context instanceof Throwable)
+            && !($context instanceof Exception)) {
                 
-                foreach ($args as $key => $value) {
-                    $replacements['{' . $key . '}'] = $value;
-                }
-                
-                return strtr($message, $replacements);
-            }
+            throw new InvalidArgumentException(
+                '[LogUtils::formatLogMessage] Second argument $context must '
+                . 'either be an array or an Exception/Throwable or null');
         }
-        
+
+        if ($messageIsArray) {
+            $args = [];
+            
+            for ($i = 0; $i < count($message); ++$i) {
+                $item = $message[$i];
+                
+                if ($i === 0) {
+                    $args[] = $item;
+                } else {
+                    $args[] = self::stringify($item);
+                }
+            }
+            
+            $ret = call_user_func_array('sprintf', $args);
+        } else if (!is_array($context)) {
+            $ret = $message;
+        } else {
+            $replacements = [];
+            
+            foreach ($context as $key => $value) {
+                $replacements['{' . $key . '}'] = self::stringify($value);
+            }
+            
+            $ret = strtr($message, $replacements);
+        }
+
+        return $ret;
+    }
+    
+    private static function stringify($value) {
+        if ($value === null) {
+            $ret = 'null';
+        } else if ($value === false) {
+            $ret = 'false';
+        } else if ($value === true) {
+            $ret = 'true';
+        } else if (is_string($value)) {
+            $ret = $value;
+        } else if (is_scalar($value)) {
+            $ret = strval($value);
+        } else if ($value instanceof Exception || $value instanceof Throwable) {
+            $ret = $value->getMessage();
+        } else {
+            $ret = json_encode($value);
+        }
+
         return $ret;
     }
 }
