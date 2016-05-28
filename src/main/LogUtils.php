@@ -57,17 +57,13 @@ final class LogUtils {
         if ($messageIsArray) {
             $args = [];
             
-            for ($i = 0; $i < count($message); ++$i) {
+            for ($i = 1; $i < count($message); ++$i) {
                 $item = $message[$i];
                 
-                if ($i === 0) {
-                    $args[] = $item;
-                } else {
-                    $args[] = self::stringify($item);
-                }
+                $args[] = self::stringify($item);
             }
             
-            $ret = call_user_func_array('sprintf', $args);
+            $ret = vsprintf($message[0], $args);
         } else if (!is_array($context)) {
             $ret = $message;
         } else {
