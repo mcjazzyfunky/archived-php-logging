@@ -185,7 +185,7 @@ $this->log = Logger::getLog('someCustomLogName');
 Sending log requests:
 
 ```php
-$this->log->trance('just to trace');
+$this->log->trace('just to trace');
 $this->log->debug('to debug something');
 $this->log->info('to send a minor important information');
 $this->log->notice('to send a major important notice');
@@ -195,32 +195,32 @@ $this->log->critical('Oh no, that may cause some serious trouble');
 $this->log->alert('Oh my goodness, something caused some really serious trouble');
 $this->log->emergency('Run for your lives! Core melt accident in sector 7G!!!');
 ```
-Placeholders for log messages:
 
+Placeholders for log messages:
 ```php
-$this->log->error('DB error: {0}', $exception->getMessage());
+$this->log->error(['DB error: %s', $exception->getMessage()]);
+// Shortcut: $this->log->error(['DB error: %s', $exception]);
 
 $this->log->error('DB error ({code}): {errMsg}', [
     'code' => $exception->getCode()
     'errMsg' => $exception->getMessage()
 ]);
-
 ```
+
 Logging stack trace:
-
 ```php
-$this->log->error('DB error: {0}', $exception->getMessage(), $exception);
+$this->log->error(['DB error: %s', $exception->getMessage()], $exception);
 ```
-Logging extra data:
 
+Logging stack trace plus extra data:
 ```php
-$this->log->emergency('Core melt accident!!!', null, $exception, {
+$this->log->emergency('Core melt accident!!!', [
+    'cause' => $exception,
     'location' => 'Sector 7G'
-});
+]);
 ```
 
 Customizing log format/message (for more details see API documentation):
-
 ```php
 Logger::setLogAdapter(new FileLogAdapter($logFile, function ($logParams) {
     // return output string to be used for logging
@@ -228,7 +228,6 @@ Logger::setLogAdapter(new FileLogAdapter($logFile, function ($logParams) {
 ```
 
 For a more sophisticated log customization:
-
 ```php
 Logger::setLogAdapter(new CustomLogAdapter(function ($logParams) {
     // do whatever you think is necessary to perform the logging properly
