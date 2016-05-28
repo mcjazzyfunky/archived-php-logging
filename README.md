@@ -73,7 +73,8 @@ enhancements:
   also use the more generic key "cause"
 
 So you have the choice whether you want to use "php-logging" in more or less
-PSR-3 standard way or whether you prefer to use the "php-logging" enhancements.
+PSR-3 standard way or whether you prefer to benefit from the "php-logging"
+enhancements.
 
 # Motivation
 
