@@ -1,14 +1,14 @@
 <?php
 
-namespace logging\adapters\internal;
+namespace Logging\Adapters\Internal;
 
 use InvalidArgumentException;
 use Throwable;
-use logging\AbstractLog;
-use logging\LogUtils;
+use Logging\AbstractLog;
+use Logging\LogUtils;
 
 class NullLog extends AbstractLog {
-    function log($level, $message, $context) {
+    function log($level, $message, array $context = null) {
         if (!LogUtils::isValidLogLevel($level, true)) {
             throw new InvalidArgumentException(
                 '[NullLog::log] First argument $level must be a '

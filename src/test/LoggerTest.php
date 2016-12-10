@@ -1,16 +1,16 @@
 <?php
 
-namespace logging;
+namespace Logging;
 
 require_once __DIR__ . '/../../include.php';
 
 use Exception;
 use PHPUnit_Framework_TestCase;
-use logging\Logger;
-use logging\Log;
-use logging\adapters\StreamLogAdapter;
-use logging\adapters\FileLogAdapter;
-use logging\adapters\CustomLogAdapter;
+use Logging\Logger;
+use Logging\Log;
+use Logging\Adapters\StreamLogAdapter;
+use Logging\Adapters\FileLogAdapter;
+use Logging\Adapters\CustomLogAdapter;
 
 class LoggerTest extends PHPUnit_Framework_TestCase {
     function testRun() {

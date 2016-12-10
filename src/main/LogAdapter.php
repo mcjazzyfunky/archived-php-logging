@@ -1,6 +1,6 @@
 <?php
 
-namespace logging;
+namespace Logging;
 
 Interface LogAdapter {
     function getLog($name);

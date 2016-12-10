@@ -1,14 +1,14 @@
 <?php
 
-namespace logging\adapters\internal;
+namespace Logging\Adapters\Internal;
 
 use Exception;
 use InvalidArgumentException;
 use Throwable;
-use logging\AbstractLog;
-use logging\Log;
-use logging\Logger;
-use logging\LogUtils;
+use Logging\AbstractLog;
+use Logging\Log;
+use Logging\Logger;
+use Logging\LogUtils;
 
 class StreamLog extends AbstractLog {
     private $stream;
@@ -19,7 +19,7 @@ class StreamLog extends AbstractLog {
         $this->logMessageFormatter = $logMessageFormatter;
     }
     
-    function log($level, $message, $context = null) {
+    function log($level, $message, array $context = null) {
         if ($level !== LOG::NONE) {
             if (!LogUtils::isValidLogLevel($level, true)) {
                 throw new InvalidArgumentException(

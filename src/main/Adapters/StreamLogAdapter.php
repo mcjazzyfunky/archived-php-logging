@@ -1,9 +1,9 @@
 <?php
 
-namespace logging\adapters;
+namespace Logging\Adapters;
 
-use logging\LogAdapter;
-use logging\adapters\internal\StreamLog;
+use Logging\LogAdapter;
+use Logging\Adapters\Internal\StreamLog;
 
 class StreamLogAdapter implements LogAdapter {
     private $stream;

@@ -1,6 +1,6 @@
 <?php
 
-namespace logging;
+namespace Logging;
 
 use Exception;
 use InvalidArgumentException;

@@ -1,49 +1,49 @@
 <?php
 
-namespace logging;
+namespace Logging;
 
 use Exception;
 use InvalidArgumentException;
 use Throwable;
 
 abstract class AbstractLog implements Log {
-    abstract function log($level, $message, $context = null);
+    abstract function log($level, $message, array $context = null);
     
     abstract function isEnabled($level);
     
-    final function trace($message, $context = null) {
+    final function trace($message, array $context = null) {
         $this->performLogging(Log::TRACE, $message, $context);   
     }
     
-    final function debug($message, $context = null) {
+    final function debug($message, array $context = null) {
         $this->performLogging(Log::DEBUG, $message, $context);   
     }
     
-    final function info($message, $context = null) {
+    final function info($message, array $context = null) {
         $this->performLogging(Log::INFO, $message, $context);   
     }
     
-    final function notice($message, $context = null) {
+    final function notice($message, array $context = null) {
         $this->performLogging(Log::TRACE, $message, $context);   
     }
     
-    final function warn($message, $context = null) {
+    final function warn($message, array $context = null) {
         $this->performLogging(Log::WARN, $message, $context);
     }
     
-    final function error($message, $context = null) {
+    final function error($message, array $context = null) {
         $this->performLogging(Log::ERROR, $message, $context);
     }
     
-    final function critical($message, $context = null) {
+    final function critical($message, array $context = null) {
         $this->performLogging(Log::CRITICAL, $message, $context);
     }
     
-    final function alert($message, $context = null) {
+    final function alert($message, array $context = null) {
         $this->performLogging(Log::ALERT, $message, $args, $extra);
     }
     
-    final function emergency($message = null, $context = null) {
+    final function emergency($message = null, array $context = null) {
         $this->performLogging(Log::EMERGENCY, $message, $context);
     }
 
@@ -83,7 +83,7 @@ abstract class AbstractLog implements Log {
         return $this->isEnabled(Log::EMERGENCY);
     }
     
-    private function performLogging($level, $message, $context) {
+    private function performLogging($level, $message, array $context = null) {
         // no need to validate $level
         $messageIsArray = is_array($message);
         $error = null; 

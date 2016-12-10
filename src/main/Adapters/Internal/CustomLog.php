@@ -1,13 +1,13 @@
 <?php
 
-namespace logging\adapters\internal;
+namespace Logging\Adapters\Internal;
 
 use InvalidArgumentException;
 use Throwable;
-use logging\AbstractLog;
-use logging\Log;
-use logging\Logger;
-use logging\LogUtils;
+use Logging\AbstractLog;
+use Logging\Log;
+use Logging\Logger;
+use Logging\LogUtils;
 
 class CustomLog extends AbstractLog {
     private $stream;
@@ -22,7 +22,7 @@ class CustomLog extends AbstractLog {
         $this->getThresholdByLogName = $getThresholdByLogName;
     }
     
-    function log($level, $message, $context = null) {
+    function log($level, $message, array $context = null) {
         $date = date('Y-m-d H:i:s');
         $levelName = LogUtils::getLogLevelName($level);
         $text = LogUtils::formatLogMessage($message, $context); 

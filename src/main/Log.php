@@ -1,6 +1,6 @@
 <?php
 
-namespace logging;
+namespace Logging;
 
 use Throwable;
 
@@ -16,27 +16,27 @@ interface Log {
     const EMERGENCY = 9;
     const NONE = 10;
     
-    function log($level, $message, $context = null);
+    function log($level, $message, array $context = null);
     
     function isEnabled($level);
     
-    function trace($message, $context = null);
+    function trace($message, array $context = null);
     
-    function debug($message, $context = null);
+    function debug($message, array $context = null);
     
-    function info($message, $context = null);
+    function info($message, array $context = null);
     
-    function notice($message, $context = null);  
+    function notice($message, array $context = null);  
     
-    function warn($message, $context = null);
+    function warn($message, array $context = null);
     
-    function error($message, $context = null);
+    function error($message, array $context = null);
     
-    function critical($message, $context = null);
+    function critical($message, array $context = null);
     
-    function alert($message, $context = null);
+    function alert($message, array $context = null);
     
-    function emergency($message, $context = null);
+    function emergency($message, array $context = null);
 
     function isTraceEnabled();
 

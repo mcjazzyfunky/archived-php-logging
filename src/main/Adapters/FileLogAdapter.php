@@ -1,9 +1,9 @@
 <?php
 
-namespace logging\adapters;
+namespace Logging\Adapters;
 
 use Exception;
-use logging\adapters\StreamLogAdapter;
+use Logging\Adapters\StreamLogAdapter;
 
 class FileLogAdapter extends StreamLogAdapter {
     function __construct($path, callable $logMessageFormatter = null) {

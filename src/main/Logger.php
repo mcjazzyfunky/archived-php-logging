@@ -1,10 +1,10 @@
 <?php
 
-namespace logging;
+namespace Logging;
 
 use InvalidArgumentException;
-use logging\Log;
-use logging\adapters\NullLogAdapter;
+use Logging\Log;
+use Logging\Adapters\NullLogAdapter;
 
 final class Logger {
     private static $adapter = null;

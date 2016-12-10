@@ -1,9 +1,9 @@
 <?php
 
-namespace logging\adapters;
+namespace Logging\Adapters;
 
-use logging\LogAdapter;
-use logging\adapters\internal\NullLog;
+use Logging\LogAdapter;
+use Logging\Adapters\Internal\NullLog;
 
 class NullLogAdapter implements LogAdapter {
     private $log;

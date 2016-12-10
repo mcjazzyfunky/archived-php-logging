@@ -1,9 +1,9 @@
 <?php
 
-namespace logging\adapters;
+namespace Logging\Adapters;
 
-use logging\LogAdapter;
-use logging\adapters\internal\CustomLog;
+use Logging\LogAdapter;
+use Logging\Adapters\Internal\CustomLog;
 
 class CustomLogAdapter implements LogAdapter {
     private $logs;
