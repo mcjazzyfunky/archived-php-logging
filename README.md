@@ -1,6 +1,6 @@
 # php-logging
 
-A super simple yet powerful logging facade for PHP
+A very simple yet powerful logging facade for PHP
 
 # Introduction
 
@@ -45,36 +45,13 @@ A PHP de facto standard logging API is the
 [PSR-3 Logger Interface](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md)
 approved by the [PHP Framework Interop Group](https://en.wikipedia.org/wiki/PHP_Standard_Recommendation).<br>
 Maybe using this quasi standard will be a good choice.<br>
-Nevertheless the author of "php-logging" is of the opinion, that the API of
-PSR-3 is a bit suboptimal.
-For example the PSR-3 logger interface does not
-provide methods to find out whether logging is activated for a certain domain,
-also you cannot pass the throwables/exceptions which are the cause of the log
-entry directly as method argument but have to pass them as part of the
-so-called "context" array with key "exception" (it's also a bit strange to call
-that key "exception" as starting of PHP 7 you have a new error base class
-Throwable and Throwables are not necessarily instances of Exception).
-That's why the "php-logging" project has been started.<br>
-As a compromise the API for the logging calls in "php-loging" is a more or less
+
+The API for the logging calls in "php-logging" is a more or less
 a superset of the API of PSR-3 LoggerInterface, providing the following
 enhancements:
 
 - Additional log level TRACE
 - Methods to find out whether a certain log level is enabled
-- More flexibility regarding the invocation of the logging methods:
-  As in PSR-3 the logging methods of "php-logging" have the arguments
-  $message and $context.
-  While in PSR-3 $message must be a string and $context must be an array
-  or null, in "php-logging" $message could also be an array which will
-  be interpreted as the arguments for a sprintf call to determine the actual
-  log message, and $context can also be a Throwable/Exception more ore less
-  as a shortcut for PSR-3's ['exception' => $exception] context argument.
-  Moreover instead of the not-so-well-named context key "exception" you can
-  also use the more generic key "cause"
-
-So you have the choice whether you want to use "php-logging" in more or less
-PSR-3 standard way or whether you prefer to benefit from the "php-logging"
-enhancements.
 
 # Motivation
 
@@ -198,8 +175,7 @@ $this->log->emergency('Run for your lives! Core melt accident in sector 7G!!!');
 
 Placeholders for log messages:
 ```php
-$this->log->error(['DB error: %s', $exception->getMessage()]);
-// Shortcut: $this->log->error(['DB error: %s', $exception]);
+$this->log->error('DB error: {cause}', ['cause' => $exception]);
 
 $this->log->error('DB error ({code}): {errMsg}', [
     'code' => $exception->getCode()
@@ -209,13 +185,13 @@ $this->log->error('DB error ({code}): {errMsg}', [
 
 Logging stack trace:
 ```php
-$this->log->error(['DB error: %s', $exception->getMessage()], $exception);
+$this->log->error('DB error: {exception}', ['exception' => $exception]);
 ```
 
 Logging stack trace plus extra data:
 ```php
 $this->log->emergency('Core melt accident!!!', [
-    'cause' => $exception,
+    'exception' => $exception,
     'location' => 'Sector 7G'
 ]);
 ```
@@ -241,7 +217,7 @@ That's it ... have fun ... ;-)
 
 # Project status
 
-"php-logging" is a very new project and still in alpha state.<br/>
+"php-logging" is currently in beta state.<br/>
 While the API is almost final and the implementation is already working,
 there's still a lot to do regarding finalizing code, unit testing and inline
 documentation.
