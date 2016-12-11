@@ -46,7 +46,7 @@ A PHP de facto standard logging API is the
 approved by the [PHP Framework Interop Group](https://en.wikipedia.org/wiki/PHP_Standard_Recommendation).<br>
 Maybe using this quasi standard will be a good choice.<br>
 
-The API for the logging calls in "php-logging" is a more or less
+The API for the logging calls in "php-logging" is more or less
 a superset of the API of PSR-3 LoggerInterface, providing the following
 enhancements:
 
@@ -138,7 +138,7 @@ have to call:
 
 ```php
 Logger::setLogAdapter(new StreamLogAdapter(STDOUT));
-Logger::setDefaultThreshold(Log::Info);
+Logger::setDefaultThreshold(Log::INFO);
 ```
 Instantiate/get a log by a certain name (normally by class name):
 
