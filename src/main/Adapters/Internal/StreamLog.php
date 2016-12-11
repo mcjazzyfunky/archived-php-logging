@@ -23,7 +23,7 @@ class StreamLog extends AbstractLog {
         if ($level !== LOG::NONE) {
             if (!LogUtils::isValidLogLevel($level, true)) {
                 throw new InvalidArgumentException(
-                    '[StreamLog::log] First argument $level must be a '
+                    '[StreamLog::log] First a rgument $level must be a '
                     . 'valid log level');
             }
             
@@ -48,40 +48,22 @@ class StreamLog extends AbstractLog {
                 } else {
                     $output = "[$date] [$levelName] [$name] $text\n";
                     
-                    $cause = null;
-                        
-                    if ($context instanceof Throwable || $context instanceof Exception) {
-                        $cause = $context;
-                    } else if (is_array($context)) {
-                        $cause = @$context['cause'];
-                        
-                        if ($cause instanceof Throwable || $cause instanceof Exception) {
-                            $context['cause'] = $cause->getMessage();
-                        } else {
-                            $cause = null;
-                            $exception = @$context['exception'];   
-    
-                            if ($exception instanceof Throwable || $exception instanceof Exception) {
-                                $cause = $exception;
-                                $context['exception'] = $cause->getMessage();
-                            }
-                        }
+                    $exception = @$context['exception'];
+                      
+                    if (!($exception instanceof \Throwable || $exception instanceof Exception)) {
+                        $exception = null;
                     }
                     
                     if (is_array($context)
                         && (count($context) > 0)
-                        && (count($context) > 1 || $cause === null)) {
+                        && (count($context) > 1 || $exception === null)) {
                         
                         $showContext = false; 
                         
-                        if (!is_string($message)) {
-                            $showContext = true;
-                        } else {
-                            foreach ($context as $key => $value) {
-                                if (!is_scalar($value) || strpos($message, '{' . $key . '}') === false) {
-                                    $showContext = true;
-                                    break;
-                                }
+                        foreach ($context as $key => $value) {
+                            if (!is_scalar($value) || strpos($message, '{' . $key . '}') === false) {
+                                $showContext = true;
+                                break;
                             }
                         }
                         
@@ -89,11 +71,9 @@ class StreamLog extends AbstractLog {
                             $output .= "---- Context ----\n";
                             
                             foreach ($context as $key => $value) {
-                                if ($value instanceof Exception || $value instanceof Throwable) {
+                                if ($value instanceof Exception || $value instanceof \Throwable) {
                                     $value = $value->getMessage();
-                                }
-                                
-                                if (!is_string($value)) {
+                                } else if (!is_string($value)) {
                                     $value = json_encode($value);
                                 }
                                 
@@ -109,20 +89,20 @@ class StreamLog extends AbstractLog {
                         }
                     }
                     
-                    if ($cause !== null) {
-                        $output .= "---- Cause ----";
+                    if ($exception !== null) {
+                        $output .= "---- Exception ----";
                         $output .= "\nClass: ";
-                        $output .= get_class($cause);
+                        $output .= get_class($exception);
                         $output .= "\nMessage: ";
-                        $output .= $cause->getMessage();
+                        $output .= $exception->getMessage();
                         $output .= "\nCode: ";
-                        $output .= $cause->getCode();
+                        $output .= $exception->getCode();
                         $output .= "\nFile: ";
-                        $output .= $cause->getFile();
+                        $output .= $exception->getFile();
                         $output .= "\nLine: ";
-                        $output .= $cause->getLine();
+                        $output .= $exception->getLine();
                         $output .= "\nStack trace:\n";
-                        $output .= $cause->getTraceAsString();
+                        $output .= $exception->getTraceAsString();
                         $output .= "\n";
                     }
                 }

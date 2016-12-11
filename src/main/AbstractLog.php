@@ -85,21 +85,10 @@ abstract class AbstractLog implements Log {
     
     private function performLogging($level, $message, array $context = null) {
         // no need to validate $level
-        $messageIsArray = is_array($message);
         $error = null; 
         
-        if (!is_string($message) && !$messageIsArray) {
-            $error = 'First argument $message must either be '
-                . 'a string or an array';
-        } else if ($messageIsArray && !is_string(@$message[0])) {
-            $error = 'First item of first argment $message must be a string';
-        } else if ($context !== null
-            && !is_array($context)
-            && !($context instanceof Throwable)
-            && !($context instanceof Exception)) {
-                
-            $error = 'Second argument $context must either be an array or an '
-                . 'Exception/Throwable or null';
+        if (!is_string($message)) {
+            $error = 'First argument $message must be a string';
         }
         
         if ($error !== null) {

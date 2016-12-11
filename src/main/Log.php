@@ -2,8 +2,6 @@
 
 namespace Logging;
 
-use Throwable;
-
 interface Log {
     const TRACE = 1;
     const DEBUG = 2;

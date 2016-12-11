@@ -32,50 +32,31 @@ final class LogUtils {
         return self::$logLevelNames[$level];
     }
     
-    static function formatLogMessage($message, $context = null) {
-        $messageIsArray = is_array($message);
+    static function formatLogMessage($message, array $context = null) {
         $ret = null;
         
-        if (!is_string($message) && !$messageIsArray) {
+        if (!is_string($message)) {
             throw new InvalidArgumentException(
                 '[LogUtils::formatLogMessage] First argument $message must '
-                . 'either be a string or an array');
-        } else if ($messageIsArray && !is_string(@$message[0])) {
-            throw new InvalidArgumentException(
-                '[LogUtils::formatLogMessage] First array element of first '
-                . 'argument $message must be a string');
-        } else if ($context !== null
-            && !is_array($context)
-            && !($context instanceof Throwable)
-            && !($context instanceof Exception)) {
-                
-            throw new InvalidArgumentException(
-                '[LogUtils::formatLogMessage] Second argument $context must '
-                . 'either be an array or an Exception/Throwable or null');
+                . 'be a string');
         }
-
-        if ($messageIsArray) {
-            $args = [];
-            
-            for ($i = 1; $i < count($message); ++$i) {
-                $item = $message[$i];
-                
-                $args[] = self::stringify($item);
-            }
-            
-            $ret = vsprintf($message[0], $args);
-        } else if (!is_array($context)) {
+        
+        if (empty($context)) {
             $ret = $message;
         } else {
             $replacements = [];
             
             foreach ($context as $key => $value) {
-                $replacements['{' . $key . '}'] = self::stringify($value);
+                $searchString = '{' . $key . '}';
+                
+                if (strpos($message, $searchString) !== false) {
+                    $replacements[$searchString] = self::stringify($value);
+                }
             }
             
             $ret = strtr($message, $replacements);
         }
-
+        
         return $ret;
     }
     
@@ -90,7 +71,7 @@ final class LogUtils {
             $ret = $value;
         } else if (is_scalar($value)) {
             $ret = strval($value);
-        } else if ($value instanceof Exception || $value instanceof Throwable) {
+        } else if ($value instanceof Exception || $value instanceof \Throwable) {
             $ret = $value->getMessage();
         } else {
             $ret = json_encode($value);
@@ -99,3 +80,4 @@ final class LogUtils {
         return $ret;
     }
 }
+

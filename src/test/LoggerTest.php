@@ -48,25 +48,24 @@ class LoggerTest extends PHPUnit_Framework_TestCase {
         // $log = Logger::getLog(__CLASS__);
         $log = Logger::getLog($this);
         
-        $log->debug('Just a debug message (with one placeholder)');
-        $log->info(['Hey %s, just wanna say hello', 'Marge']);
+        $log->debug('Just a debug message (with no placeholder)');
+        $log->info('Hey {name}, just wanna say hello', ['name' => 'Marge']);
         
         $error = new Exception('Evil error', 911);
 
         // Include error message:
         $log->error(
-            ['Ooops, there was an error: %s', 123],
-            ['err' => $error->getMessage()]);
+            'Ooops, there was an error: {errNo}',
+            ['err' => $error->getMessage(), 'errNo' => 123]);
         
         // Include error message and stack trace:
         $log->critical(
             'Help, there was a critical error: {exception}',
-            ['exception' => $error],
-            $error);
+            ['exception' => $error]);
 
         // Include error message and stack trace and some extra log data
         $log->emergency(
-            'Run for your lives, there was a core melt accident: {cause}',
-            ['cause' => $error, 'location' => 'Sector 7G']);
+            'Run for your lives, there was a core melt accident: {exception}',
+            ['exception' => $error, 'location' => 'Sector 7G']);
     }
 }

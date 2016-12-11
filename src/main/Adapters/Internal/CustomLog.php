@@ -3,7 +3,6 @@
 namespace Logging\Adapters\Internal;
 
 use InvalidArgumentException;
-use Throwable;
 use Logging\AbstractLog;
 use Logging\Log;
 use Logging\Logger;
